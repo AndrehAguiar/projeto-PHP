@@ -1,0 +1,1 @@
+Pasta destinada para armazenamento das arquivos com os conteúdos exibidos nas páginas do site (contato, galeria, missão, etc)

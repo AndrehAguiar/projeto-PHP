@@ -1,0 +1,1 @@
+Pasta destinada para armazenamento dos arquivos contendo os módulos de elementos comuns do site (topo, menu, rodapé, etc)
