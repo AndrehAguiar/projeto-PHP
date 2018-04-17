@@ -4,7 +4,7 @@
 define('DB_HOST', 'localhost');
 define('DB_USER', 'userLocal');
 define('DB_PASS', 'passUserLocal');
-define('DB_NAME', 'u793605722_tig5');
+define('DB_NAME', 'nomeBancoDados');
  
 // habilita todas as exibições de erros
 ini_set('display_errors', true);
