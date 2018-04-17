@@ -18,8 +18,8 @@
 		$nivel = $_GET['class'];
 	}
 
-	$slc_avaliacao = mysqli_query($TIG, "SELECT * FROM u793605722_tig5.avaliacao
-		JOIN u793605722_tig5.users
+	$slc_avaliacao = mysqli_query($TIG, "SELECT * FROM nomeBancoDados.avaliacao
+		JOIN nomeBancoDados.users
 			ON (users.id_usuario = '".$user."')
 		WHERE (fk_usuario = '".$user."'
 			AND fk_resposta='".$id_resposta."')")
@@ -28,7 +28,7 @@
 		$row_slc_avaliacao = mysqli_fetch_assoc($slc_avaliacao);
 
 
-	$soma = mysqli_query($TIG, "SELECT SUM(avaliacao.avaliacao) AS cls_respostas FROM u793605722_tig5.avaliacao
+	$soma = mysqli_query($TIG, "SELECT SUM(avaliacao.avaliacao) AS cls_respostas FROM nomeBancoDados.avaliacao
 									WHERE avaliacao.fk_resposta = '".$id_resposta."'")
 		or die( mysqli_error( $TIG ) );
 
@@ -37,7 +37,7 @@
 
 	if($row_slc_avaliacao == '' && isset($_GET['class']) != ''){	
 		
-		$class_resposta = "INSERT INTO u793605722_tig5.avaliacao (`fk_usuario`, `fk_resposta`, `avaliacao`) VALUES ('".$user."','".$id_resposta."','".$nivel."')";
+		$class_resposta = "INSERT INTO nomeBancoDados.avaliacao (`fk_usuario`, `fk_resposta`, `avaliacao`) VALUES ('".$user."','".$id_resposta."','".$nivel."')";
 
 		if (mysqli_query($TIG, $class_resposta)) {
 			   echo "Resposta comentado com sucesso!";
@@ -48,7 +48,7 @@
 		
 	 }elseif($row_slc_avaliacao != '' && isset($_GET['class']) != ''){
 		
-		$class_resposta = "UPDATE u793605722_tig5.avaliacao SET avaliacao ='".$nivel."' WHERE (fk_resposta='".$id_resposta."')";
+		$class_resposta = "UPDATE nomeBancoDados.avaliacao SET avaliacao ='".$nivel."' WHERE (fk_resposta='".$id_resposta."')";
 
 		if (mysqli_query($TIG, $class_resposta)) {
 			   echo "Resposta comentado com sucesso!";
