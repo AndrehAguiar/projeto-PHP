@@ -47,6 +47,8 @@
 }
 #cssmenu > ul > li {
   float: left;
+  min-width: 98%;
+  max-width: 99.9%;
 }
 #cssmenu.align-center > ul {
   font-size: 0;

@@ -1,34 +1,23 @@
-<?php
- if(isset($_POST["submit"])){
-	$hostname_TIG = "localhost";
-	$database_TIG = "ver_duvida";
-	$username_TIG = "5TIG";
-	$password_TIG = "testehost";
-
-	// Create connection
-	$TIG = new mysqli( $hostname_TIG, $username_TIG, $password_TIG); 
-	mysqli_set_charset( $TIG, 'utf8' );
-
-	// Check connection
-	if ($TIG->connect_error) {
-	   die("Connection failed: " . $TIG->connect_error);
-	} 
-	$senha = sha1(md5($_POST["password"]));
-	$in_user = "INSERT INTO ver_duvida.users (`name`, `sobre_nome`, `email`, `password`) VALUES ('".$_POST["name"]."','".$_POST["sobre_nome"]."','".$_POST["email"]."', '".$senha."')";
-
-	if (mysqli_query($TIG, $in_user)) {
-	   echo "Usu&aacute;rio cadastrado com sucesso!"; ?>
-       <?php
-	} else {
-		   echo "Error: " . $in_user . "" . mysqli_error($TIG);
-	}
-	$TIG->close();
- }
-?>
 <h2>Cadastro</h2>
 <hr/>
-<form method="post" name="in_user" action="">
+<?php if(isset($_GET['cadastro'])=='erro'){
+		   echo "Usu&aacute;rio j&aacute; cadastrado!";?>
+			<meta http-equiv="Refresh" content="3;URL=index.php?p=cadastro&nv_materia=nova" >
+	<?php }elseif(isset($_GET['usuario'])== "cadastrado"){
+	echo "Usu&aacute;rio cadastrado com sucesso!";?>
+			<meta http-equiv="Refresh" content="3;URL=index.php" >
+<?php }else{?>
+<form method="post" name="in_user" action="sql/insert.php">
   <table align="center">
+    <tr valign="baseline">
+      <td nowrap align="right">Forma&ccedil;&atilde;o:</td>
+      <td><select class="form-control" name="formacao" placeholder="Nome" required>
+      	<option value="">Selecione um n&iacute;vel</option>
+      	<option value="Estudante">Estudante</option>
+      	<option value="Profissional">Profissional</option>
+      	<option value="Mestre">Mestre</option>
+      </select></td>
+    </tr>
     <tr valign="baseline">
       <td nowrap align="right">Nome:</td>
       <td><input class="form-control" type="text" name="name" value="" placeholder="Nome" size="32" required="required"></td>
@@ -47,9 +36,9 @@
     </tr>
     <tr valign="baseline">
       <td nowrap align="right">&nbsp;</td>
-      <td><input id="botao" class="form-control confirma" type="submit" name="submit" value="Gravar"></td>
+      <td><input id="botao" class="form-control confirma" type="submit" name="user" value="Gravar"></td>
     </tr>
   </table>
-  <input type="hidden" name="MM_insert" value="nv_usuario">
 </form>
+<?php } ?>
 

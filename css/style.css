@@ -273,7 +273,38 @@ p{
 	font-weight:bold;
 	cursor:pointer;
 }
-form .confirma, #identidade .solicita, #menu .solicita, #info .solicita{
+.label{
+	width: 30%;
+	position: relative;
+	display: inline;
+	margin-bottom: 25px;
+}
+.row{
+	width:auto;
+	display: inline;
+	float: left;
+}
+#nv_perfil, #ed_perfil{
+	max-width: 500px;
+	margin: 0 auto;
+}
+form .endereco input, form .bairro input{
+	display: inline;
+	margin-bottom: 25px;
+}
+form .endereco, form .bairro, form .row #celular{
+	width: 100%;
+}
+form .endereco #endereco{
+	width: 60%;
+}
+form .bairro #bairro, form .bairro #cidade{
+	width: 30%;
+}
+form .endereco #numero, form .endereco #complemento, form .bairro #estado, form .bairro #pais{
+	width: 18%;
+}
+form .confirma, #identidade .solicita, #menu .solicita, #info .solicita,#interesse .solicita, #cssmenu .solicita{
 	color:#fff;
 	background:#060;
 	cursor:pointer;
@@ -283,7 +314,7 @@ form .alerta{
 	background:#C00;
 	color:#ddd;
 }
-form .confirma:hover, #identidade .solicita:hover, #menu .solicita:hover, #info .solicita:hover{
+form .confirma:hover, #identidade .solicita:hover, #menu .solicita:hover, #info .solicita:hover, #interesse .solicita:hover, #cssmenu .solicita:hover{
 	background:#9C0;
 	color:#333;
 }
@@ -350,7 +381,7 @@ textarea.form-control {
 	font-weight:bold;
 }
 #info{
-	width: 31%;
+	width: 47.5%;
 	height:auto;
 	position:relative;
 	margin-right:2%;
@@ -358,14 +389,36 @@ textarea.form-control {
 	border-left:1px solid #999;
 }
 #info label{
-	width:43,5%;
+	width:100%;
 	position:relative;
 	margin-bottom:2%;
 	display:block;
 	text-align:right;
 }
 #info input{
+	width:60%;
+	border: 0px none;
+	background-color:#fff;
+}
+#interesse{
+	width: 31.2%;
+	height:auto;
+	position:relative;
+	margin-right:2%;
+	float:left;
+	border-left:1px solid #999;
+}
+#interesse label{
+	width:100%;
+	position:relative;
+	margin-bottom:2%;
+	display:block;
+	text-align:right;
+}
+#interesse input{
 	width:45%;
+	border: 0px none;
+	background-color:#fff;
 }
 #footer{
 	width:100%;
@@ -403,7 +456,7 @@ textarea.form-control {
 		width: 150px;
 	}
 	#content{
-		width: 60%;
+		width: 72%;
 		padding: 1%;
 	}
 }

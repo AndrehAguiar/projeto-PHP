@@ -1,20 +1,14 @@
 <?php
-$hostname_TIG = "localhost";
-$database_TIG = "ver_duvida";
-$username_TIG = "5TIG";
-$password_TIG = "testehost";
-$TIG = new mysqli( $hostname_TIG, $username_TIG, $password_TIG); 
-mysqli_set_charset( $TIG, 'utf8' );
-
-$categoria = $_GET['categoria'];
-$RsPerguntas = mysqli_query( $TIG, "SELECT * FROM ver_duvida.materia_verifica
-									JOIN ver_duvida.pergunta_verifica ON (materia_verifica.pk_materia_id = pergunta_verifica.fk_id_materia)
-									LEFT JOIN ver_duvida.resposta_verifica ON (pergunta_verifica.pk_id_pergunta = resposta_verifica.fk_id_pergunta)
-									JOIN ver_duvida.users ON (pergunta_verifica.fk_id_usu = users.id)
-										WHERE pergunta_verifica.fk_id_materia = $categoria ORDER BY pk_id_pergunta DESC" )or die( mysqli_error( $TIG ) );
+	$categoria = $_GET['categoria'];
+	include("sql/pag_categoria.php"); 
+?>
+<h1>Perguntas Recentes</h1>
+<hr />
+    
+    <?php if (!empty($dados)):
 	
-	 while ($row_RsPerguntas = mysqli_fetch_assoc($RsPerguntas)){ 
-			$data = explode("-", $row_RsPerguntas['data_pergunta']);
+		 foreach ($dados as $row_RsCategPerguntas): 
+			$data = explode("-", $row_RsCategPerguntas->data);
 			$data[0]; // ano
 			$data[1]; // mês 
 			$data[2]; // mês
@@ -22,45 +16,71 @@ $RsPerguntas = mysqli_query( $TIG, "SELECT * FROM ver_duvida.materia_verifica
 			$dia[0]; // dia
 			$dia[1]; // hora
 			$hora = explode(".", $dia[1]);
-			$hora[0];
-			$nivel = $row_RsPerguntas['class_resposta']	;
-			
+			$hora[0];		
+			$pergunta = $row_RsCategPerguntas->id;
 			?>
-<script type="text/javascript">
-function MM_goToURL() { //v3.0
-  var i, args=MM_goToURL.arguments; document.MM_returnValue = false;
-  for (i=0; i<(args.length-1); i+=2) eval(args[i]+".location='"+args[i+1]+"'");
-}
-</script>
-            <div id="perguntas" onclick="MM_goToURL('parent','?p=respostas&amp;pergunta=<?php echo $row_RsPerguntas['pk_id_pergunta']; ?>');return document.MM_returnValue">
-                <h3><?php echo $row_RsPerguntas['materia']; ?></h3>
-                <p><?php echo $row_RsPerguntas['pergunta']; ?></p>
-                
-                <h5>Postado por: <?php echo $row_RsPerguntas['sobre_nome'];?>, <?php echo $row_RsPerguntas['name'];?> em  <?php echo $dia[0];?>&frasl;<?php echo $data[1];?>&frasl;<?php echo $data[0] ;?> &agrave;s <?php echo $hora[0] ;?></h5>
-                
-            </div><div id="rdp_perguntas">
-            <?php 
-                
-                if (isLoggedIn()){ ?>
-                <div id="botoes">
-                    		<button value="" class="botao" onclick="MM_goToURL('parent','?p=cadastro&resposta=nova&pergunta=<?php echo $row_RsPerguntas['pk_id_pergunta']; ?>');return document.MM_returnValue"><big><i class="fa fa-commenting"></i> &#124; </big> Responder</button>
-                </div>
-        <?php } 	
-			$RsQtdResposta = "SELECT COUNT(*) AS qtd_respostas FROM ver_duvida.resposta_verifica WHERE (resposta_verifica.fk_id_pergunta = '".$row_RsPerguntas['pk_id_pergunta']."')" or die( mysqli_error( $TIG ) );
-
-			$result = mysqli_query($TIG, $RsQtdResposta);
-			$row_RsQtdResposta = mysqli_fetch_assoc($result);
-				
-            if ((int)$nivel > 0){ ?>
-                    <big><i class="fa fa-thumbs-up"></i></big>
-                    <?php }elseif ((int)$nivel < 0){ ?>
-                    <big><i class="fa fa-thumbs-down"></i></big>
-                    <?php }else{ ?>
-                    <big><i class="fa fa-warning"></i></big>
-                    <?php } 
-                echo $row_RsQtdResposta['qtd_respostas'];
-				?>
-                
-				<small >Respostas		</small>
+            <div id="perguntas" onclick="MM_goToURL('parent','?p=respostas&amp;pergunta=<?php echo $pergunta ?>');return document.MM_returnValue">
+                <h3><?php echo $row_RsCategPerguntas->materia; ?></h3>
+                <p><?php echo $row_RsCategPerguntas->pergunta; ?></p>
+                <h5>
+                	Postado por: <?php
+					echo $row_RsCategPerguntas->formacao;?>: 
+					<?php echo $row_RsCategPerguntas->sobrenome;?>,
+					<?php echo $row_RsCategPerguntas->name;?> em
+					<?php echo $dia[0];?> &#45;
+					<?php echo $data[1];?> &#45;
+					<?php echo $data[0] ;?> &agrave;s 
+					<?php echo $hora[0] ;?>
+                </h5>                
             </div>
-<?php }  ?>
+            <div id="rdp_perguntas">
+            <?php if (isLoggedIn()){ ?>
+                <div id="botoes">
+                    <button value="" class="botao" onclick="MM_goToURL('parent','?p=cadastro&resposta=nova&pergunta=<?php echo $pergunta; ?>');return document.MM_returnValue"><big><i class="fa fa-commenting"></i> &#124; </big> Responder</button>
+                </div>
+				<?php }
+				$RsNivel = "SELECT SUM(avaliacao.avaliacao) AS cls_respostas FROM u793605722_tig5.avaliacao
+					LEFT JOIN (u793605722_tig5.resposta)
+						ON (resposta.fk_pergunta = '".$pergunta."')
+						WHERE avaliacao.fk_resposta = resposta.id";	
+				
+					 
+                     $result = $TIG->prepare($RsNivel);   
+                     $result->execute();   
+                     $nivel = $result->fetch(PDO::FETCH_OBJ); 
+				
+				if ($nivel->cls_respostas > 0){ ?>
+						<big><i class="fa fa-thumbs-up"></i></big>
+						<?php }elseif ($nivel->cls_respostas < 0){ ?>
+						<big><i class="fa fa-thumbs-down"></i></big>
+						<?php }else{ ?>
+						<big><i class="fa fa-warning"></i></big>
+					<?php }
+                    $RsQtdResposta =  "SELECT COUNT(*) AS qtd_respostas FROM u793605722_tig5.resposta WHERE (resposta.fk_pergunta = '".$row_RsCategPerguntas->id."')";  
+					 
+                     $total = $TIG->prepare($RsQtdResposta);   
+                     $total->execute();   
+                     $result = $total->fetch(PDO::FETCH_OBJ); 
+				
+                	echo $result->qtd_respostas; ?>
+                
+				<small>Resposta(s) </small> 
+            </div> 
+		<hr/>
+     <?php endforeach; ?> 
+     <div class='box-paginacao'>     
+           <a class='box-navegacao <?=$exibir_botao_inicio?>' href="index.php?page=<?=$primeira_pagina?>" title="Primeira Página">&#124; Primeira  &#124; </a> 
+           <a class='box-navegacao <?=$exibir_botao_inicio?>' href="index.php?page=<?=$pagina_anterior?>" title="Página Anterior">Anterior  &#124; </a> 
+        <?php
+      /* Loop para montar a páginação central com os números */   
+      for ($i=$range_inicial; $i <= $range_final; $i++):   
+        $destaque = ($i == $pagina_atual) ? 'destaque' : '' ;  
+        ?>   
+        	<a class='box-numero <?=$destaque?>' href="index.php?page=<?=$i?>"><?=$i?> </a>   
+      <?php endfor; ?>    
+       		<a class='box-navegacao <?=$exibir_botao_final?>' href="index.php?page=<?=$proxima_pagina?>" title="Próxima Página">&#124; Pr&oacute;xima  &#124; </a>  
+       		<a class='box-navegacao <?=$exibir_botao_final?>' href="index.php?page=<?=$ultima_pagina?>" title="Última Página">&Uacute;ltimo  &#124; </a> 
+     </div>   
+    <?php else: ?>   
+     <p class="bg-danger">Nenhum registro foi encontrado!</p>  
+    <?php endif; ?>

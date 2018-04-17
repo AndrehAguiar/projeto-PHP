@@ -7,9 +7,6 @@
 			case 'perfil':
 				$page = "panel.php";
 				break;
-			case 'cadastro':
-				$page = "cadastros.php";
-				break;
 			case 'categorias':
 				$page = "perguntas.php";
 				break;
@@ -17,7 +14,10 @@
 				$page = "pergunta.php";
 				break;
 			case 'respostas':
-				$page = "resposta.php";
+				$page = "pergunta.php";
+				break;
+			case 'cadastro':
+				$page = "ctrl_form.php";
 				break;
 			default:
 				$page = "home.php";
