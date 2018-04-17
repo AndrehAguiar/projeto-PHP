@@ -12,12 +12,12 @@
  /* Instrução de consulta para paginação com MySQL */  
 	 /* Cria uma conexão PDO com MySQL */  
 	 $opcoes = array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES UTF8');  
-	 $TIG = new PDO("mysql:host=localhost; dbname=u793605722_tig5;", "u793605722_gti5t", "LqDyNy:?I1Sgehv`sZ", $opcoes); 
+	 $TIG = new PDO("mysql:host=localhost; dbname=nomeBancoDados;", "userLocal", "senhaUserLocal", $opcoes); 
  
-	$RsPerguntas =  "SELECT * FROM u793605722_tig5.materia
-						JOIN u793605722_tig5.pergunta
+	$RsPerguntas =  "SELECT * FROM nomeBancoDados.materia
+						JOIN nomeBancoDados.pergunta
 							ON ( materia.id = pergunta.fk_materia)
-						LEFT JOIN u793605722_tig5.users
+						LEFT JOIN nomeBancoDados.users
 							ON (pergunta.fk_usuario = users.id_usuario)
 						ORDER BY pergunta.id DESC LIMIT {$linha_inicial}, " . QTDE_REGISTROS;
 						
@@ -26,7 +26,7 @@
 	 $dados = $stm->fetchAll(PDO::FETCH_OBJ);   
  
  /* Conta quantos registos existem na tabela */  
- $sqlContador = "SELECT COUNT(*) AS total_registros FROM u793605722_tig5.pergunta";   
+ $sqlContador = "SELECT COUNT(*) AS total_registros FROM nomeBancoDados.pergunta";   
  $conta = $TIG->prepare($sqlContador);   
  $conta->execute();   
  $valor = $conta->fetch(PDO::FETCH_OBJ);  
