@@ -19,7 +19,7 @@
 	 if(isset($_POST["user"])){
 
 		$senha = sha1(md5($_POST["password"]));
-		$in_user = "INSERT INTO u793605722_tig5.users ( `email`, `formacao`, `name`, `sobrenome`, `password`) VALUES ('".$_POST["email"]."', '".$_POST["formacao"]."', '".$_POST["name"]."','".$_POST["sobre_nome"]."','".$senha."')";
+		$in_user = "INSERT INTO nomeBancoDados.users ( `email`, `formacao`, `name`, `sobrenome`, `password`) VALUES ('".$_POST["email"]."', '".$_POST["formacao"]."', '".$_POST["name"]."','".$_POST["sobre_nome"]."','".$senha."')";
 
 		if (mysqli_query($TIG, $in_user)) {
 			include("../settings/login.php");
@@ -36,7 +36,7 @@
 		   die("Connection failed: " . $TIG->connect_error);
 		} 
 
-		$in_pergunta = "INSERT INTO u793605722_tig5.pergunta (`pergunta`, `nivel`, `fk_materia`, `fk_usuario`) VALUES ('".$_POST["pergunta"]."','".$_POST["nivel"]."','".$_POST["id_mater"]."','".$_POST["user_id"]."')";
+		$in_pergunta = "INSERT INTO nomeBancoDados.pergunta (`pergunta`, `nivel`, `fk_materia`, `fk_usuario`) VALUES ('".$_POST["pergunta"]."','".$_POST["nivel"]."','".$_POST["id_mater"]."','".$_POST["user_id"]."')";
 
 		if (mysqli_query($TIG, $in_pergunta)) {
 			header('location:../index.php?p=cadastro&pergunta=nova&pergunta=cadastrada');
@@ -53,7 +53,7 @@
 		   die("Connection failed: " . $TIG->connect_error);		} 
 
 
-		$in_resposta = "INSERT INTO u793605722_tig5.resposta (`resposta`, `fk_pergunta`, `fk_usuario`) VALUES ('".$_POST["resposta"]."','".$_POST["id_pergunta"]."','".$_POST["user_id"]."')";		 
+		$in_resposta = "INSERT INTO nomeBancoDados.resposta (`resposta`, `fk_pergunta`, `fk_usuario`) VALUES ('".$_POST["resposta"]."','".$_POST["id_pergunta"]."','".$_POST["user_id"]."')";		 
 		 
 
 		if (mysqli_query($TIG, $in_resposta)) {
@@ -73,7 +73,7 @@
 		   die("Connection failed: " . $TIG->connect_error);
 		} 
 
-		$in_comenta = "INSERT INTO u793605722_tig5.comentario (`comentario`, `fk_resposta`, `fk_usuario`) VALUES ('".$_POST["comentario"]."','".$_POST["id_resposta"]."','".$_POST["user_id"]."')";
+		$in_comenta = "INSERT INTO nomeBancoDados.comentario (`comentario`, `fk_resposta`, `fk_usuario`) VALUES ('".$_POST["comentario"]."','".$_POST["id_resposta"]."','".$_POST["user_id"]."')";
 
 		if (mysqli_query($TIG, $in_comenta)) {
 		   echo "Coment&aacute;rio cadastrada com sucesso!";
@@ -93,7 +93,7 @@
 		   die("Connection failed: " . $TIG->connect_error);
 		} 
 
-		$in_mater = "INSERT INTO u793605722_tig5.materia (materia, fk_categoria , fk_usuario) VALUES ('".$_POST["mater"]."', '".$_POST["id_categ"]."', '".$_POST["id_user"]."')";
+		$in_mater = "INSERT INTO nomeBancoDados.materia (materia, fk_categoria , fk_usuario) VALUES ('".$_POST["mater"]."', '".$_POST["id_categ"]."', '".$_POST["id_user"]."')";
 
 		if (mysqli_query($TIG, $in_mater)) {
 			header('location:../index.php?p=cadastro&nv_materia=novo&materia=cadastrada');
@@ -109,7 +109,7 @@
 		if ($TIG->connect_error) {
 		   die("Connection failed: " . $TIG->connect_error);
 		} 
-		$in_categ = "INSERT INTO u793605722_tig5.categoria (categoria, fk_usuario) VALUES ('".$_POST["name"]."', '".$_POST["id_user"]."')";
+		$in_categ = "INSERT INTO nomeBancoDados.categoria (categoria, fk_usuario) VALUES ('".$_POST["name"]."', '".$_POST["id_user"]."')";
 
 		if (mysqli_query($TIG, $in_categ)) {
 			header('location:../index.php?p=cadastro&nv_materia=novo&materia=cadastrada');
@@ -123,7 +123,7 @@
 
 	 if(isset($_POST["interesse"])){
 
-		$in_interesse = "INSERT INTO u793605722_tig5.interesse (`nivel`,`email_usuario`,  `fk_materia`) VALUES ('".$_POST["nivel"]."','".$_POST["user_id"]."', '".$_POST["id_mater"]."')";
+		$in_interesse = "INSERT INTO nomeBancoDados.interesse (`nivel`,`email_usuario`,  `fk_materia`) VALUES ('".$_POST["nivel"]."','".$_POST["user_id"]."', '".$_POST["id_mater"]."')";
 
 		if (mysqli_query($TIG, $in_interesse)) {
 			header(sprintf('location: %s', $_SERVER['HTTP_REFERER']));
@@ -135,7 +135,7 @@
 	 }
 
 	 if(isset($_POST["form_perfil"])){
-		$in_perfil = "INSERT INTO u793605722_tig5.cadastro (`telefone`, `endereco`,  `numero`,  `complemento`,  `bairro`,  `cidade`,  `estado`,  `pais`,  `cep`,  `fk_usuario`) VALUES ('".$_POST["celular"]."','".$_POST["endereco"]."', '".$_POST["numero"]."', '".$_POST["complemento"]."', '".$_POST["bairro"]."', '".$_POST["cidade"]."', '".$_POST["estado"]."', '".$_POST["pais"]."', '".$_POST["cep"]."', '".$_POST["usuario"]."')";
+		$in_perfil = "INSERT INTO nomeBancoDados.cadastro (`telefone`, `endereco`,  `numero`,  `complemento`,  `bairro`,  `cidade`,  `estado`,  `pais`,  `cep`,  `fk_usuario`) VALUES ('".$_POST["celular"]."','".$_POST["endereco"]."', '".$_POST["numero"]."', '".$_POST["complemento"]."', '".$_POST["bairro"]."', '".$_POST["cidade"]."', '".$_POST["estado"]."', '".$_POST["pais"]."', '".$_POST["cep"]."', '".$_POST["usuario"]."')";
 
 		if (mysqli_query($TIG, $in_perfil)) {
 			header(sprintf('location: %s&dados=cadastrado', $_SERVER['HTTP_REFERER']));
