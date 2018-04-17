@@ -18,7 +18,7 @@
 	if(isset($_POST["excluir"])){
 	 
 	$userDelete = sha1(md5($_POST["usuario"]).$_POST['email']);
-	 $ex_usuario = "UPDATE u793605722_tig5.users SET  email='".$userDelete."', data='".$_POST['data']."' WHERE (users.id_usuario = '".$_POST["usuario"]."')";
+	 $ex_usuario = "UPDATE nomeBancoDados.users SET  email='".$userDelete."', data='".$_POST['data']."' WHERE (users.id_usuario = '".$_POST["usuario"]."')";
 	 
 	//$ex_usuario = "DELETE FROM u793605722_tig5.users WHERE users.id_usuario = '".$_POST['usuario']."'";
 	
