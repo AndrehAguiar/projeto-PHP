@@ -1,10 +1,11 @@
 ﻿<?php
 	//include("Connections/tig.php");
 
-$hostname_TIG = "localhost";
-$database_TIG = "ver_duvida";
-$username_TIG = "5TIG";
-$password_TIG = "testehost";
+
+	$hostname_TIG = "localhost";
+	$database_TIG = "nomeBancoDados";
+	$username_TIG = "userLocal";
+	$password_TIG = "passUserLocal";
 $TIG = new mysqli( $hostname_TIG, $username_TIG, $password_TIG); 
 mysqli_set_charset( $TIG, 'utf8' );	
 
