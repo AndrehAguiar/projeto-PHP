@@ -110,3 +110,14 @@ function() {
 
 });
 })(jQuery);
+
+(function($){
+  $(document).ready(function(){
+    $('#show-modal').click(function(){
+      $('#modal-termo-uso').show();
+    });
+  });
+  $('#modal-termo-uso .close-modal').click(function(){
+    $('#modal-termo-uso').hide();
+  });
+})(jQuery);
