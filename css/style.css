@@ -316,6 +316,44 @@ p{
 	color: #FFF;
 	cursor: pointer;
 }
+
+/*MODAL DE TERMO DE USO*/
+#modal-pesquisa-usabilidade {
+	display: block;
+	background-color: rgba(0, 0, 0, 0.85);
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	z-index: 1072;
+	padding: 20px 15px;
+	display: none;
+}
+#modal-pesquisa-usabilidade .modal-content {
+	max-width: 650px;
+	max-height: 500px;
+	padding: 10px;
+	background: #fff;
+	text-align: justify;
+	position: relative;
+	top: 50%;
+	transform: translateY(-50%);
+	margin: 0 auto;
+}
+#modal-pesquisa-usabilidade .modal-content .close-modal {
+	margin: 10px auto;
+	width: 150px;
+	background-color: #007bff;
+	text-align: center;
+	font-size: 16px;
+	font-weight: bold;
+	padding: 5px;
+	border-radius: 5px;
+	color: #FFF;
+	cursor: pointer;
+}
+
 .label{
 	width: 30%;
 	position: relative;
