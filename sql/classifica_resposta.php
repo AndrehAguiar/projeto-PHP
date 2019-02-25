@@ -1,9 +1,10 @@
 ﻿<?php
 
 	$hostname_TIG = "localhost";
-	$database_TIG = "u793605722_tig5";
-	$username_TIG = "u793605722_gti5t";
-	$password_TIG = "LqDyNy:?I1Sgehv`sZ";
+	$database_TIG = "nomeBancoDados";
+	$username_TIG = "userLocal";
+	$password_TIG = "passUserLocal";
+
 	// Create connection
 	$TIG = new mysqli( $hostname_TIG, $username_TIG, $password_TIG); 
 	mysqli_set_charset( $TIG, 'utf8' );								 
@@ -17,7 +18,8 @@
 		$nivel = $_GET['class'];
 	}
 
-	if(isset($idResposta) == ""){
+	if(isset($idResposta) == "")
+	{
 		$idResposta = $_GET['resposta'];
 	}
 

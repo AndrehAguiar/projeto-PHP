@@ -9,8 +9,8 @@
  /* Calcula a linha inicial da consulta */  
  $linha_inicial = ($pagina_atual -1) * QTDE_REGISTROS;  
    
- /* Instrução de consulta para paginação com MySQL */  
-	/* Cria uma conexão PDO com MySQL */  
+ /* Instrução de consulta para paginação com MySQL   
+	 Cria uma conexão PDO com MySQL */ 
 	$opcoes = array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES UTF8');  
 	$TIG = new PDO("mysql:host=localhost; dbname=u793605722_tig5;", "u793605722_gti5t", "LqDyNy:?I1Sgehv`sZ", $opcoes); 
 
@@ -26,7 +26,7 @@
 	$dados = $stm->fetchAll(PDO::FETCH_OBJ);   
  
  /* Conta quantos registos existem na tabela */  
- $sqlContador = "SELECT COUNT(*) AS total_registros FROM u793605722_tig5.pergunta";   
+ $sqlContador = "SELECT COUNT(*) AS total_registros FROM nomeBancoDados.pergunta";   
  $conta = $TIG->prepare($sqlContador);   
  $conta->execute();   
  $valor = $conta->fetch(PDO::FETCH_OBJ);  

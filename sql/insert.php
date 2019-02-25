@@ -1,10 +1,11 @@
 ﻿<?php
 	//include("Connections/tig.php");
 
+
 	$hostname_TIG = "localhost";
-	$database_TIG = "u793605722_tig5";
-	$username_TIG = "u793605722_gti5t";
-	$password_TIG = "LqDyNy:?I1Sgehv`sZ";
+	$database_TIG = "nomeBancoDados";
+	$username_TIG = "userLocal";
+	$password_TIG = "passUserLocal";
 
 	// Create connection
 	$TIG = new mysqli( $hostname_TIG, $username_TIG, $password_TIG); 
@@ -84,7 +85,7 @@
 		   die("Connection failed: " . $TIG->connect_error);
 		} 
 
-		$in_mater = "INSERT INTO u793605722_tig5.materia (materia, fk_categoria , fk_usuario) VALUES ('".$_POST["mater"]."', '".$_POST["id_categ"]."', '".$_POST["id_user"]."')";
+		$in_mater = "INSERT INTO nomeBancoDados.materia (materia, fk_categoria , fk_usuario) VALUES ('".$_POST["mater"]."', '".$_POST["id_categ"]."', '".$_POST["id_user"]."')";
 
 		if (mysqli_query($TIG, $in_mater)) {
 			header('location:../index.php?p=cadastro&nv_materia=novo&materia=cadastrada');
@@ -100,7 +101,7 @@
 		if ($TIG->connect_error) {
 		   die("Connection failed: " . $TIG->connect_error);
 		} 
-		$in_categ = "INSERT INTO u793605722_tig5.categoria (categoria, fk_usuario) VALUES ('".$_POST["name"]."', '".$_POST["id_user"]."')";
+		$in_categ = "INSERT INTO nomeBancoDados.categoria (categoria, fk_usuario) VALUES ('".$_POST["name"]."', '".$_POST["id_user"]."')";
 
 		if (mysqli_query($TIG, $in_categ)) {
 			header('location:../index.php?p=cadastro&nv_materia=novo&materia=cadastrada');

@@ -2,15 +2,15 @@
 	 /* Constantes de configuração */  
  define('QTDE_REGISTROS', 3);   
  define('RANGE_PAGINAS', 1);   
-   
+
  /* Recebe o número da página via parâmetro na URL */  
  $pagina_atual = (isset($_GET['page']) && is_numeric($_GET['page'])) ? $_GET['page'] : 1;   
    
  /* Calcula a linha inicial da consulta */  
  $linha_inicial = ($pagina_atual -1) * QTDE_REGISTROS;  
    
- /* Instrução de consulta para paginação com MySQL */  
-	/* Cria uma conexão PDO com MySQL */  
+ /* Instrução de consulta para paginação com MySQL 
+  Cria uma conexão PDO com MySQL */  
 	$opcoes = array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES UTF8');  
 	$TIG = new PDO("mysql:host=localhost; dbname=u793605722_tig5;", "u793605722_gti5t", "LqDyNy:?I1Sgehv`sZ", $opcoes); 
 
