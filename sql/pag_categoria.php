@@ -10,28 +10,24 @@
  $linha_inicial = ($pagina_atual -1) * QTDE_REGISTROS;  
    
  /* Instrução de consulta para paginação com MySQL */  
-	 /* Cria uma conexão PDO com MySQL */  
-	 $opcoes = array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES UTF8');  
-	 $TIG = new PDO("mysql:host=localhost; dbname=u793605722_tig5;", "u793605722_gti5t", "LqDyNy:?I1Sgehv`sZ", $opcoes); 
- 
-	$RsCategPerguntas =  "SELECT * FROM u793605722_tig5.materia
-	
-						JOIN u793605722_tig5.pergunta
-							ON (pergunta.fk_materia = materia.id)
-							
-						LEFT JOIN u793605722_tig5.users
-							ON (users.id_usuario = pergunta.fk_usuario)
-							
-						WHERE materia.id = '".$categoria."'
-						
-						ORDER BY pergunta.id DESC LIMIT {$linha_inicial}, " . QTDE_REGISTROS;
-						
-	$stm = $TIG->prepare($RsCategPerguntas);   
-	 $stm->execute();   
-	 $dados = $stm->fetchAll(PDO::FETCH_OBJ);   
+	/* Cria uma conexão PDO com MySQL */  
+	$opcoes = array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES UTF8');  
+	$TIG = new PDO("mysql:host=localhost; dbname=u793605722_tig5;", "u793605722_gti5t", "LqDyNy:?I1Sgehv`sZ", $opcoes); 
+
+	$RsPerguntas =  "SELECT * FROM u793605722_tig5.materia
+					JOIN u793605722_tig5.pergunta
+						ON ( materia.id = pergunta.fk_materia )
+					LEFT JOIN u793605722_tig5.users
+						ON ( pergunta.fk_usuario = users.id_usuario )
+						 WHERE (pergunta.fk_materia = '".$idMateria."')
+					ORDER BY pergunta.id DESC LIMIT {$linha_inicial}, " . QTDE_REGISTROS;
+
+	$stm = $TIG->prepare($RsPerguntas);   
+	$stm->execute();   
+	$dados = $stm->fetchAll(PDO::FETCH_OBJ);   
  
  /* Conta quantos registos existem na tabela */  
- $sqlContador = "SELECT COUNT(*) AS total_registros FROM u793605722_tig5.pergunta WHERE (pergunta.id = '".$categoria."')";   
+ $sqlContador = "SELECT COUNT(*) AS total_registros FROM u793605722_tig5.pergunta WHERE (pergunta.fk_materia = '".$idMateria."')";   
  $conta = $TIG->prepare($sqlContador);   
  $conta->execute();   
  $valor = $conta->fetch(PDO::FETCH_OBJ);  

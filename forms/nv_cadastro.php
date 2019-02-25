@@ -9,17 +9,16 @@
 	{
 		echo "Perfil cadastrado com sucesso!";?>
 			<meta http-equiv="Refresh" content="3;URL=index.php?p=perfil&user=<?php echo ($user); ?>" >
-	<?php }
-		else
-	{
-?>
-	<form id="nv_perfil" method="post" action="sql/insert.php" name="in_perfil">
+	<?php } else { ?>
+	
+	<form id="nv_perfil" method="post" action="<?php echo (SQL_PATH); ?>insert.php" name="in_perfil">
 
 		<div class="row">
-			<div class="label">Telefone:
+			<div class="label">Telefone móvel:
 			</div>
 			<span id="movel">
-			 <input class="form-control" id="celular" name="celular" type="celular" placeholder="Informe seu celular" data-rule-required="true" data-rule-celular="true" required></span>
+				<input type="text" name="celular" class="form-control" data-rule-required="true" data-rule-celular="true" required placeholder="Telefone m&oacute;vel" >
+			</span>
 		</div>
 
 		<div class="row">
@@ -44,15 +43,13 @@
 			<input class="form-control" id="estado" name="estado" placeholder="UF" required>		
 			<input class="form-control" id="pais" name="pais" placeholder="Pa&iacute;s" required>
 		</div>
-		<input type="hidden" value="<?php echo $_SESSION['user_id'] ?>" name="usuario">
+		
+		<input type="hidden" value="<?php echo $_SESSION['user_id'] ?>" name="id_usuario">
 		<input type="hidden" id="ibge" name="ibge">
 
-		<input type="submit" class="form-control confirma" name="form_perfil" value="Gravar">
+		<input type="submit" class="form-control confirma" name="cadastro" value="Gravar">
 		<button type="reset" class="form-control alerta" onclick="MM_goToURL('parent','?p=perfil&user=<?php echo ($_SESSION['user_id']); ?>');return document.MM_returnValue" id="botao">Cancelar</button>
+		
 	</form>
-<?php } ?>
-<script  type="text/javascript" src="<?php echo JS_PATH.("cep.js") ?>"></script>
-<script type="text/javascript" src="<?php echo JS_PATH.("jquery.js") ?>"></script> 
-<script type="text/javascript" src="<?php echo JS_PATH.("jquery.validate.min.js") ?>"></script>
-<script type="text/javascript" src="<?php echo JS_PATH.("SpryValidationTextField.js") ?>"></script>
-<script  type="text/javascript" src="<?php echo JS_PATH.("valida_celular.js") ?>"></script>
+	
+<?php } ?>	

@@ -1,8 +1,8 @@
-<form method="post" name="nv_interesse" action="sql/insert.php">
-  <?php if (isset($_GET['interesse']) != "") { 
+<form method="post" name="nv_interesse" action="<?php echo (SQL_PATH); ?>insert.php">
+  <?php if (isset($_GET['interesse']) == "novo") { 
 	
 		if (isset($_GET['area']) == '') {	
-			include ("sql/select.php");?> 
+			include (SQL_PATH."select.php");?> 
 			<tr valign="baseline">
 				<td nowrap>&Aacute;rea
 					<select name="id_categ" class="form-control" id="categ" onchange="MM_jumpMenu('parent',this,0)" required>
@@ -15,7 +15,7 @@
 			</tr>
 			<?php }else{ 
 				$area = $_GET['area'];	
-				include ("sql/select.php");?>
+				include (SQL_PATH."select.php");?>
 				<select id="nivel" name="nivel" class="form-control" required>
 					<option value="">Selecione o n&iacute;vel</option>
 					 <option value="B&aacute;sico">B&aacute;sico</option>

@@ -1,5 +1,6 @@
-<h3>Coment&aacute;rios</h3>
-	<?php while ($row_RsComenta = mysqli_fetch_assoc($RsComenta)){ 
+<?php include(SQL_PATH."slc_comentario.php");
+
+		while ($row_RsComenta = mysqli_fetch_assoc($RsComenta)){ 
 		$data = explode("-", $row_RsComenta['data']);
 		$data[0]; // ano
 		$data[1]; // mês 
@@ -11,7 +12,10 @@
 		$hora[0];		
 		?>
 	<div id="comentarios">
-		<p><?php echo $row_RsComenta['comentario'];?></p>
+		<?php if(isset($row_RsComenta['imagem']) != "" && ($row_RsComenta['imagem']) != null){ ?>
+			<img src="<?php echo($row_RsComenta['imagem'])?>">
+		<?php } ?>
+		<p><?php echo nl2br($row_RsComenta['comentario']);?></p>
 		<h5>
 			Comentado por:
 			<?php echo $row_RsRespostas['sobrenome'];?>,

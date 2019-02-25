@@ -1,21 +1,22 @@
-	<h3>Respostas</h3>	
-	
+	<h3><i class="fa fa-commenting"> </i> Respostas</h3>		
 	<?php
+		include(SQL_PATH."slc_respostas.php");
 		while ($row_RsRespostas = mysqli_fetch_assoc($RsRespostas)){ 
 			$id_resposta = $row_RsRespostas['id'];
+            if (isLoggedIn() && isset($_GET['comentario'])!='nova'){ 
 
-			switch ($row_RsRespostas['formacao']){
-				case "Estudante":
-					$nota = 1;
-					break;
-				case "Profissional":
-					$nota = 3;
-					break;
-				case "Mestre":
-					$nota = 5;
-					break;			
-			}		
-			
+				switch ($_SESSION['user_formacao']){
+					case "Estudante":
+						$nota = 1;
+						break;
+					case "Profissional":
+						$nota = 3;
+						break;
+					case "Mestre":
+						$nota = 5;
+						break;			
+				}		
+			}
 			$data = explode("-", $row_RsRespostas['data']);
 			$data[0]; // ano
 			$data[1]; // mês 
@@ -25,31 +26,39 @@
 			$dia[1]; // hora
 			$hora = explode(".", $dia[1]);
 			$hora[0];	
-			$id_resposta = $row_RsRespostas['id'];
+			$idResposta = $row_RsRespostas['id'];
+			$idPergunta = $row_RsRespostas['fk_pergunta'];
 		?>
 		<div id="respostas">
-			<p><?php
-			echo $row_RsRespostas['resposta'];?></p>
+				
+		<?php if (isset($row_RsRespostas['imagem']) != "" && (isset($row_RsRespostas['imagem']) != "null")){ ?>
+			<img src="<?php echo $row_RsRespostas['imagem']; ?>" >	
+		<?php } ?>     
+			
+			<p><?php 
+			echo nl2br($row_RsRespostas['resposta']); ?></p>
 			<h5>
                 <big>
                    <?php 
-                		if (isLoggedIn()){
+                		if (isLoggedIn()){ 
 							
 							$user = $_SESSION['user_id'];
-							include("sql/conta_respostas.php");	
+							include(SQL_PATH."conta_respostas.php");	
 							$user_class = $row_RsNivelUser['cls_respostas'];
-							include('sql/classifica_resposta.php');
+							include(SQL_PATH.'classifica_resposta.php');
 							
-						if ($user_class  <= 0){ ?>                    
-							 <a name="classe" href="sql/classifica_resposta.php?p=respostas&pergunta=<?php echo $pergunta ;?>&resposta=<?php echo $id_resposta;?>&user=<?php echo ($user); ?>&class=<?php echo ($row_slc_avaliacao["avaliacao"] + $nota);?>" class="botao"><i class="fa fa-check"></i></a>
+						if ($user_class  <= 0){ 
+							$nota = ($row_slc_avaliacao["avaliacao"] + $nota);?>                    
+							 <a name="classe" href="<?php echo SQL_PATH; ?>classifica_resposta.php?p=respostas&pergunta=<?php echo $idPergunta ;?>&resposta=<?php echo $idResposta;?>&user=<?php echo ($user); ?>&class=<?php echo ($nota);?>" class="botao"><i class="fa fa-check"></i></a>
                     
-                    <?php }if ($user_class >= 0) { ?>
+                    <?php }if ($user_class >= 0) { 
+							$nota = ($row_slc_avaliacao["avaliacao"] - $nota);?>
                     
-	                    <a name="classe" href="sql/classifica_resposta.php?p=respostas&pergunta=<?php echo $row_RsRespostas['fk_pergunta'];?>&resposta=<?php echo $id_resposta;?>&user=<?php echo ($user); ?>&class=<?php echo ($row_slc_avaliacao["avaliacao"] - $nota); ?>" class="botao"><i class="fa fa-close"></i></a>
+	                    <a name="classe" href="<?php echo SQL_PATH; ?>classifica_resposta.php?p=respostas&pergunta=<?php echo $idPergunta ;?>&resposta=<?php echo $idResposta;?>&user=<?php echo $user; ?>&class=<?php echo ($nota); ?>" class="botao"><i class="fa fa-close"></i></a>
 	                    
                 <?php }
 				}
-						include("sql/conta_respostas.php");	
+			
 						$nivel_resposta = $row_RsNivelResposta['cls_respostas'];?>
                 </big>
                    
@@ -71,14 +80,25 @@
 			<?php                 
                 if (isLoggedIn() && isset($_GET['comentario'])!='nova'){ ?>
                     <div id="botoes">
-                        <button value="" class="botao" onclick="MM_goToURL('parent','?p=cadastro&pergunta=<?php echo $pergunta; ?>&resposta=<?php echo $id_resposta; ?>&comentario=novo');return document.MM_returnValue"><big><i class="fa fa-comments-o"></i>&#124; </big> Comentar</button>
+                        <button value="" class="botao" onclick="MM_goToURL('parent','?p=cadastro&pergunta=<?php echo $idPergunta; ?>&resposta=<?php echo $idResposta; ?>&comentario=novo');return document.MM_returnValue"><big><i class="fa fa-comments-o"></i>&#124; </big> Comentar</button>
                     </div>
             <?php }  ?>
             	
             </h5>
-            <hr/><?php			
-				include("sql/slc_comentario.php");
-				include (CONTENT_PATH."comenta.php");
-			?>
+            <hr/>
+            <?php include(SQL_PATH."conta_comentarios.php");
+				echo($row_RsQtdComentario['qtd_comentarios'])." comentário(s)";
+			
+				if($row_RsQtdComentario['qtd_comentarios'] > 0){?>
+				
+					<a class="link" onclick="MM_showHideLayers('<?php echo ($idResposta) ?>','','show')"><h3><i class="fa fa-comments-o"> </i> Coment&aacute;rios</h3></a>
+				
+					<div id="<?php echo ($idResposta) ?>" class="botao esconder">
+						<a id="botoes" class="botao fechar" onclick="MM_showHideLayers('<?php echo ($idResposta) ?>','','hide')">Fechar coment&aacute;rios <i class="fa fa-close"></i></a>
+						
+						<?php include (CONTENT_PATH."comenta.php");	?>
+						
+					</div>
+				<?php } ?>
 		</div>
 <?php } ?>

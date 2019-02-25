@@ -1,95 +1,31 @@
 <?php 
-	require_once 'settings/init.php';
-	require 'settings/check.php';
+	require_once SETTINGS_PATH.'init.php';
+	require SETTINGS_PATH.'check.php';
 
 	$area = isset($_GET['area']);
 	$user = $_SESSION['user_id'];
 
-	include("sql/slc_usuario.php");
+	include(SQL_PATH."slc_usuario.php");
 	$row_User = mysqli_fetch_assoc($sl_user);
 	$row_cdUser = mysqli_fetch_assoc($slUser);
+	$bgColor = "#9C0";
+	$txtColor = "#333";
 ?>
-         
-<h1>Painel do Usuário</h1>
 
-<p>Bem-vindo ao seu painel, <?php echo $_SESSION['user_name']; ?> | <a href="settings/logout.php">Sair</a></p>
-<hr>
-<h2>Dados de cadastro </h2>
-	<div id="info">
-		<label for="name"> Forma&ccedil;&atilde;o:
-		<input readonly name="name" value="<?php echo $row_User['formacao']; ?>" class="leitura"/> </label>
-		
-		<label for="name"> Nome:
-		<input readonly name="name" value="<?php echo $_SESSION['user_name']; ?>" class="leitura"/> </label>
-
-
-		<label for="sobre_nome"> Sobrenome:
-		<input readonly name="sobre_nome" value="<?php echo $row_User['sobrenome']; ?>" class="leitura"/></label>
-
-
-		<label for="sobrenome"> E&#45;mail &frasl; Login:
-		<input readonly name="sobre_nome" value="<?php echo $row_User['email']; ?>" class="leitura"/></label>
-		
-		<label for="telefone"> Telefone:
-		<input readonly name="telefone" value="<?php echo $row_cdUser['telefone']; ?>" placeholder="Informe o Telefone" class="leitura"/> </label>
-		<hr>
-		<?php if($row_cdUser['telefone'] == "" || $row_cdUser['telefone'] == ""){?>		
-			<button type="button" class="form-control solicita" id="botao" onClick="MM_goToURL('parent','?p=cadastro&user=<?php  echo($_SESSION['user_id']); ?>&perfil=novo');return document.MM_returnValue">Completar cadastro</button>	
-		<?php }else{?>		
-			
-			<button type="button" class="form-control solicita" id="botao" onClick="MM_goToURL('parent','?p=cadastro&user=<?php echo $_SESSION['user_id']; ?>&ed_perfil=<?php echo($row_cdUser['id']);?>');return document.MM_returnValue">Editar cadastro</button>
-		<?php }?>
-			
-			<button type="button" class="form-control solicita" id="botao" onClick="MM_goToURL('parent','?p=cadastro&ed_user=<?php echo($_SESSION['user_id']);?>');return document.MM_returnValue">Editar login</button>
-	 </div>
-	<div id="info">
-		
-		<label for="endereco"> Endere&ccedil;o:
-		<input readonly name="endereco" value="<?php echo $row_cdUser['endereco']; ?>" placeholder="Informe o Rua/Av" class="leitura"/> </label>
-
-
-		<label for="numero"> Numero:
-		<input readonly name="numero" value="<?php echo $row_cdUser['numero']; ?>" placeholder="Informe o N&uacute;mero" class="leitura"/></label>
-
-
-		<label for="complemento"> Complemento:
-		<input readonly name="complemento" value="<?php echo $row_cdUser['complemento']; ?>" placeholder="Informe o Complemento" class="leitura"/></label>
-
-
-		<label for="bairro">Bairro:
-		<input readonly name="bairro" value="<?php echo $row_cdUser['bairro']; ?>" placeholder="Informe o Bairro" class="leitura"/></label>
-
-
-		<label for="cidade">Cidade:
-		<input readonly name="cidade" value="<?php echo $row_cdUser['cidade']; ?>" placeholder="Informe a Cidade" class="leitura"/></label>
-		
-		<label for="estado"> Estado:
-		<input readonly name="estado" value="<?php echo $row_cdUser['estado']; ?>" placeholder="Informe o Estado" class="leitura"/> </label>
-
-
-		<label for="pais"> Pais:
-		<input readonly name="pais" value="<?php echo $row_cdUser['pais']; ?>" placeholder="Informe o Pa&iacute;s" class="leitura"/></label>
-
-
-		<label for="cep"> CEP:
-		<input readonly name="cep" value="<?php echo $row_cdUser['cep']; ?>" placeholder="CEP" class="leitura"/></label>
-	 </div>
-	 <hr style="width: 100%;">
-	 <h2>Interesses do usu&aacute;rio</h2>
-	<?php while ($row_slInteresse = mysqli_fetch_assoc($slInteresse)){?>
-		<div id="interesse">
-			<input readonly name="titulo" value="<?php echo $row_slInteresse['nivel']; ?> " class="leitura"/>
-			<input readonly name="materia" value="<?php echo $row_slInteresse['materia']; ?>" class="leitura"/>
-		 </div>
-	<?php } if (isset($_GET['interesse'])=="novo"){?>		
-		<div id="interesse">
-			<?php 
-			if(isset($_GET['cadastro'])=="erro"){
-				echo("Interesse j&aacute; cadastrado!");
-			}include(FORMS_PATH."nv_interesse.php");?>
-		</div>
-	<?php }else{?>
-		<div id="interesse">
-		<button type="button" class="form-control solicita" id="botao" onClick="MM_goToURL('parent','?p=perfil&user=<?php echo $_SESSION['user_id']; ?>&interesse=novo');return document.MM_returnValue">Novo interesse</button>
-		</div>
-	<?php } ?>
+<h2><i class="fa fa-user-circle"> </i> Painel do Usuário</h2>
+<p>Bem-vindo ao seu painel, <?php echo $_SESSION['user_name']; ?> | <a href="<?php echo SETTINGS_PATH; ?>logout.php">Sair</a></p>
+<div class="tab">
+	<a style="background-color: <?php echo($bgColor); ?>; color:<?php echo($txtColor); ?>;" id="btnPerguntas" onClick="showPerguntas()"><i class="fa fa-bullhorn"> </i> Minhas Perg.</a>
+	<a id="btnRespostas" onClick="showRespostas()"><i class="fa fa-commenting"> </i> Minhas Resp.</a>
+	<a id="btnComentarios" onClick="showComentarios()"><i class="fa fa-comments-o"> </i> Meus Coment.</a>
+	<a id="btnCadastro" onClick="showCadastro()"><i class="fa fa-drivers-license"> </i> Cadastro</a>
+	<a id="btnInteresses" onClick="showInteresses()"><i class="fa fa-check-square-o"> </i> Interesses</a>
+</div>
+<hr/>
+<?php 
+	
+	include(CONTENT_PATH."perguntasUser.php");
+	include(CONTENT_PATH."respostasUser.php");
+	include(CONTENT_PATH."comentariosUser.php");
+	include(CONTENT_PATH."user_dados.php");
+	include(CONTENT_PATH."user_interesses.php"); ?>

@@ -12,10 +12,11 @@
 	// Seleciona e imprimi a pergunta selecionada
 
 	$RsPergunta = mysqli_query( $TIG, "SELECT * FROM u793605722_tig5.pergunta
-										JOIN (u793605722_tig5.materia)
-											ON (materia.id = pergunta.fk_materia)
+											
 										LEFT JOIN (u793605722_tig5.users)
 											ON (users.id_usuario = pergunta.fk_usuario)
-										WHERE pergunta.id = '".$pergunta."'" )or die( mysqli_error( $TIG ) );
+											
+										WHERE pergunta.id = '".$idPergunta."'" )
+		or die( mysqli_error( $TIG ) );
 	$TIG->close();
 ?>

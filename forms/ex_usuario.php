@@ -1,15 +1,14 @@
 <?php
 require 'settings/check.php';
-
 	
 	$user = $_SESSION['user_id'];
-	include("sql/slc_usuario.php");
+	include(SQL_PATH."slc_usuario.php");
 while ($row_sl_user = mysqli_fetch_assoc($sl_user))
 { ?>
 	<h2>Excluir Usu&aacute;rio</h2>
    <hr>
    <h3>Deseja realmente excluir <?php echo $_SESSION['user_name'];?> <?php echo($row_sl_user['sobrenome']);?>?</h3>
-    <form method="post" name="ex_usuario" action="sql/delete.php">
+    <form method="post" name="ex_usuario" action="<?php echo (SQL_PATH); ?>delete.php">
       <table align="center">
         <tr valign="baseline">
           <td nowrap align="right">Name:</td>

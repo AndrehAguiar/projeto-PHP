@@ -4,7 +4,7 @@
 
 	$user = $_SESSION['user_id'];
 
-	include("sql/slc_usuario.php");
+	include(SQL_PATH."slc_usuario.php");
 	$row_cdUser = mysqli_fetch_assoc($slUser);
 
 	if(isset($_GET['cadastro'])=='erro')
@@ -22,13 +22,14 @@
 ?>
 	<h2>Atualizar cadastro <?php echo ($_SESSION['user_name']); ?>&#58; <?php echo ($_SESSION['user_email']); ?></h2>
 	<hr>
-	<form id="ed_perfil" name="ed_perfil" method="post" action="sql/update.php">
+	<form id="ed_perfil" name="ed_perfil" method="post" action="<?php echo (SQL_PATH); ?>update.php">
 
 		<div class="row">
-			<div class="label">Telefone:
+			<div class="label">Telefone móvel:
 			</div>
 			<span id="movel">
-			 <input class="form-control" id="celular" name="celular" type="celular" placeholder="Informe seu celular" data-rule-required="true" data-rule-celular="true" required value="<?php echo($row_cdUser['telefone']) ?>"></span>
+				<input type="text" name="celular" class="form-control" data-rule-required="true" data-rule-celular="true" required placeholder="Telefone m&oacute;vel"  value="<?php echo($row_cdUser['telefone']) ?>">
+			</span>
 		</div>
 
 		<div class="row">
@@ -60,8 +61,3 @@
 		<button type="reset" class="form-control alerta" onclick="MM_goToURL('parent','?p=perfil&user=<?php echo ($_SESSION['user_id']); ?>');return document.MM_returnValue" id="botao">Cancelar</button>
 	</form>
 <?php } ?>
-<script  type="text/javascript" src="<?php echo JS_PATH.("cep.js") ?>"></script>
-<script type="text/javascript" src="<?php echo JS_PATH.("jquery.js") ?>"></script> 
-<script type="text/javascript" src="<?php echo JS_PATH.("jquery.validate.min.js") ?>"></script>
-<script type="text/javascript" src="<?php echo JS_PATH.("SpryValidationTextField.js") ?>"></script>
-<script  type="text/javascript" src="<?php echo JS_PATH.("valida_celular.js") ?>"></script>

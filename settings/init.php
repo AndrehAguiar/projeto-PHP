@@ -1,5 +1,5 @@
 <?php
- 
+
 // constantes com as credenciais de acesso ao banco MySQL
 define('DB_HOST', 'localhost');
 define('DB_USER', 'u793605722_gti5t');

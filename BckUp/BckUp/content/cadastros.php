@@ -4,7 +4,7 @@
 	if (isset($_GET['login'])=="erro"){
 		include(FORMS_PATH."form-login.php");
 	}
-	if (isset($_GET['login'])=="erro" ||(isset($_GET['user'])=="novo") && isset($_GET['perfil'])!="novo" && isset($_GET['ed_perfil'])==""){
+	if (isset($_GET['login'])=="erro" ||(isset($_GET['user'])=="novo")){
 		include(FORMS_PATH."nv_usuario.php");
 	}
 	if (isset($_GET['ed_user'])!=""){
@@ -12,12 +12,6 @@
 	}
 	if (isset($_GET['ex_user'])!=""){
 		include(FORMS_PATH."ex_usuario.php");
-	}
-	if (isset($_GET['perfil'])=="novo" && isset($_GET['user'])!= "" && isset($_GET['ed_perfil'])== ""){
-		include(FORMS_PATH."nv_cadastro.php");
-	}
-	if (isset($_GET['ed_perfil'])=="novo" && isset($_GET['user'])!= ""){
-		include(FORMS_PATH."ed_cadastro.php");
 	}
 	if (isset($_GET['nv_materia'])!=""){
 		include(FORMS_PATH."nv_materia.php");

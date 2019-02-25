@@ -1,13 +1,6 @@
 ﻿<?php
 	// include("Connections/tig.php");
 
-	$hostname_TIG = "localhost";
-	$database_TIG = "u793605722_tig5";
-	$username_TIG = "u793605722_gti5t";
-	$password_TIG = "LqDyNy:?I1Sgehv`sZ";
-	$TIG = new mysqli( $hostname_TIG, $username_TIG, $password_TIG); 
-	mysqli_set_charset( $TIG, 'utf8' );
-
 	// Create connection
 	$TIG = new mysqli( $hostname_TIG, $username_TIG, $password_TIG); 
 	mysqli_set_charset( $TIG, 'utf8' );
@@ -34,5 +27,6 @@
 									 LEFT JOIN u793605722_tig5.users
 										ON (users.email = interesse.email_usuario)
 									WHERE users.id_usuario = '".$user."' ORDER BY interesse.id") or die( mysqli_error( $TIG ) );
+	$TIG->close();
 
 ?>

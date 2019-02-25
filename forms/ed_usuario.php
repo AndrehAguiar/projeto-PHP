@@ -3,7 +3,7 @@
 
 	
 	$user = $_SESSION['user_id'];
-	include("sql/slc_usuario.php");
+	include(SQL_PATH."slc_usuario.php");
 
 	if(isset($_GET['cadastro'])=='erro')
 	{
@@ -19,9 +19,9 @@
 	{
 	while ($row_sl_user = mysqli_fetch_assoc($sl_user)){ ?>
 
-	<h2>Edita Usu&aacute;rio</h2> 
+	<h2><i class="fa fa-edit"> </i> Edita Usu&aacute;rio</h2> 
 	<hr/>
-    <form method="post" name="ed_usuario" action="sql/update.php">
+    <form method="post" name="ed_usuario" action="<?php echo (SQL_PATH); ?>update.php">
       <table align="center">
 		<tr valign="baseline">
 		  <td nowrap align="right">Forma&ccedil;&atilde;o:</td>

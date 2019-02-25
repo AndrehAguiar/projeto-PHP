@@ -1,6 +1,6 @@
 <?php	
 	$user = $_SESSION['user_id'];
- 	include("sql/select.php");
+ 	include(SQL_PATH."select.php");
 ?>
 <h2>Cadastro de conte&uacute;do</h2>
 <hr/>
@@ -11,7 +11,7 @@
 		   echo "Conte&uacute;do cadastrado com sucesso!";?>
 			<meta http-equiv="Refresh" content="3;URL=index.php?p=cadastro&nv_materia=nova" >
 	<?php }else{ ?>
-<form method="post" name="nv_materia" action="sql/insert.php">
+<form method="post" name="nv_materia" action=<?php echo SQL_PATH."insert.php" ?>>
  
   <table align="center">
     <tr valign="baseline">
